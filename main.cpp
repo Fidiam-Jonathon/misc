@@ -31,97 +31,99 @@ int main(int argc, char* argv[])
     }
 
 
-        int arraySize = 8;
-        int myArray[arraySize];
+    int arraySize = 9;
+    int myArray[arraySize];
 
-        for ( int i = 0; i < arraySize; i++)
-            myArray[i] = (rand() % 1000);
+    for ( int i = 0; i < arraySize; i++)
+        myArray[i] = (rand() % 1000);
 
-            cout << "unsorted array: ";
+    cout << "unsorted array: ";
 
-            for (int i = 0; i < arraySize; i++){
-                cout << myArray[i] << " ";
-            }
-            cout << endl;
-            cout << endl;
+    for (int i = 0; i < arraySize; i++)
+    {
+        cout << myArray[i] << " ";
+    }
+    cout << endl;
+    cout << endl;
 
-            sortMerge(myArray, 0, arraySize - 1);
+    sortMerge(myArray, 0, arraySize - 1);
 
-            cout << "sorted array: ";
-            for (int i = 0; i < arraySize; i++){
-                cout << myArray[i] << " ";
-            }
-            cout << endl;
-
-/*
-
-            char text[256];
-            cout << "enter a string: ";
-            cin.getline(text, 256);
-
-            if (isUpperCase(text)){
-                cout << "the 1st letter is upperhcase\n";
-            }
-            else{
-                cout << "the 1st letter is not uppercase\n";
-            }
-
-
-            int x;
-            cout << "Enter a number which you want to return a sum of squares: ";
-            cin >> x;
-            cout << sumOfSqr(x);
-
-
-
-        char* t1 = "ABCDE";
-
-        printRecursive(t1, 6);
-        cout << endl;
-        printReverseRecursive(t1, 0);
-        cout << endl;
-
-
-        int a;
-        int b;
-        cout << "Enter two numbers: ";
-        cin >> a >> b;
-        cout << "the GCD of " << a << " and " << b << " is " << gcd(a,b);
-
-
-
-    long long x;
-    cout << "Enter a number you wish to see in binary: ";
-    cin >> x;
-    printBinary(x);
-
-
-
-    cout << "What number would you like to find all the primes of? ";
-    int n;
-    cin >> n;
-
-    bool* primes = primeSieve(n);
-
-    cout << "The primes of " << n << " are: ";
-    for (int i = 0; i < n; i++){
-        if (primes[i])
-            cout << i << " ";
+    cout << "sorted array: ";
+    for (int i = 0; i < arraySize; i++)
+    {
+        cout << myArray[i] << " ";
     }
     cout << endl;
 
-    delete [] primes;
+    /*
+
+                char text[256];
+                cout << "enter a string: ";
+                cin.getline(text, 256);
+
+                if (isUpperCase(text)){
+                    cout << "the 1st letter is upperhcase\n";
+                }
+                else{
+                    cout << "the 1st letter is not uppercase\n";
+                }
 
 
-    cout << "Enter a number that you want to test if it is prime or not: ";
-    long long a;
-    cin >> a;
-    if (a % 2 == 0)
-        cout << "the number is not prime\n";
-    else
-        cout << "the number is prime\n";
+                int x;
+                cout << "Enter a number which you want to return a sum of squares: ";
+                cin >> x;
+                cout << sumOfSqr(x);
 
-        */
+
+
+            char* t1 = "ABCDE";
+
+            printRecursive(t1, 6);
+            cout << endl;
+            printReverseRecursive(t1, 0);
+            cout << endl;
+
+
+            int a;
+            int b;
+            cout << "Enter two numbers: ";
+            cin >> a >> b;
+            cout << "the GCD of " << a << " and " << b << " is " << gcd(a,b);
+
+
+
+        long long x;
+        cout << "Enter a number you wish to see in binary: ";
+        cin >> x;
+        printBinary(x);
+
+
+
+        cout << "What number would you like to find all the primes of? ";
+        int n;
+        cin >> n;
+
+        bool* primes = primeSieve(n);
+
+        cout << "The primes of " << n << " are: ";
+        for (int i = 0; i < n; i++){
+            if (primes[i])
+                cout << i << " ";
+        }
+        cout << endl;
+
+        delete [] primes;
+
+
+        cout << "Enter a number that you want to test if it is prime or not: ";
+        long long a;
+        cin >> a;
+        if (a % 2 == 0)
+            cout << "the number is not prime\n";
+        else
+            cout << "the number is prime\n";
+
+            */
     return 0;
 }
 
@@ -203,8 +205,8 @@ void merge(int array[], int iBegin, int iMid, int iEnd)
     int n1 = (iMid - iBegin) + 1;
     int n2 = iEnd - iMid;
 
-    int left[n1 + 1];
-    int right[n2 + 1];
+    int left[n1];
+    int right[n2];
 
     // copy over lower half
     for (int i = 1; i <= n1; i++)
@@ -225,26 +227,46 @@ void merge(int array[], int iBegin, int iMid, int iEnd)
     cout << "N1: " << n1 << endl;
     cout << "N2: " << n2 << endl;
 
-    left[n1 + 1] = INT_MAX;
-    right[n2 + 1] = INT_MAX;
+    // left[n1 + 1] = INT_MAX;
+    // right[n2 + 1] = INT_MAX;
 
     int i = 1;
     int j = 1;
     for (int k = iBegin; k <= iEnd; k++)
     {
-        if (left[i] <= right[j])
-        {
+        if (left[i] <= right[j]){
             array[k] = left[i];
             i++;
+            cout << "Array[" << k << "]: " << array[k] << endl;
+
+            if (i > n1){
+                k++;
+                while(j <= n2 && k <= iEnd){
+                    array[k] = right[j];
+                    j++;
+                    cout << "Array[" << k << "]: " << array[k] << endl;
+                    k++;
+                }
+            }
         }
-        else
-        {
+        else{
             array[k] = right[j];
             j++;
+            cout << "Array[" << k << "]: " << array[k] << endl;
+            if (j > n2){
+                k++;
+                while (i <= n1 && k <= iEnd){
+                    array[k] = left[i];
+                    cout << "Array[" << k << "]: " << array[k] << endl;
+                    k++;
+                    i++;
+
+                }
+            }
         }
-        cout << "Array[" << k << "]: " << array[k] << endl;
 
     }
+
     cout << endl;
 
 }
@@ -316,7 +338,8 @@ int gcd(int a, int b)
 
 void printBinary(long long n)
 {
-    if (n > 0){
+    if (n > 0)
+    {
 
         long long r = n % 2;
         printBinary(n /= 2);
@@ -329,11 +352,13 @@ void printBinary(long long n)
 }
 
 
-bool* primeSieve(int n){
+bool* primeSieve(int n)
+{
 
     bool* temp = new bool[n + 1];
 
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++)
+    {
         temp[i] = true;
     }
 
@@ -341,10 +366,12 @@ bool* primeSieve(int n){
     temp[0] = false;
     temp[1] = false;
 
-    for (int i = 2; i <= m; i++){
-        if(temp[i]){
+    for (int i = 2; i <= m; i++)
+    {
+        if(temp[i])
+        {
             for (int j = i * i; j <= n; j += i)
-            temp[j] = false;
+                temp[j] = false;
         }
     }
 
